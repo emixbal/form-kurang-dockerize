@@ -1,5 +1,5 @@
-## Aplikasi manajemen hewan ternak
-Aplikasi manajemen hewan ternak
+## Aplikasi manajemen voucher
+Aplikasi manajemen voucher
 
 ## Requirements
 
