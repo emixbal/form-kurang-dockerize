@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users',
-            'name' => 'required|min:5',
+            'name' => 'required|min:2',
             'password' => [
                 'required', 
                 'min:8',
@@ -140,12 +140,12 @@ class UserController extends Controller
     {        
         $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users,id',
-            'name' => 'required|min:5',
+            'name' => 'required|min:2',
             'role_radio' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('users/new')
+            return redirect("users/$id/edit")
             ->withErrors($validator)
             ->withInput();
         }
