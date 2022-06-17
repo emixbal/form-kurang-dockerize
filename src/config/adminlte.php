@@ -256,7 +256,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'List',
-                    'url'  => '#',
+                    'url'  => 'anggota',
                 ],
                 [
                     'text'    => 'level_one',
