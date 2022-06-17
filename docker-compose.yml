@@ -23,7 +23,7 @@ services:
     container_name: php
     volumes:
       - ./src:/var/www/html:delegated
-    user: laravel
+    user: root
     networks:
       - laravel
 
@@ -37,7 +37,7 @@ services:
     working_dir: /var/www/html
     depends_on:
       - php
-    user: laravel
+    user: root
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - laravel
@@ -50,7 +50,7 @@ services:
     volumes:
       - ./src:/var/www/html:delegated
     working_dir: /var/www/html
-    user: laravel
+    user: root
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
