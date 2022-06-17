@@ -90,8 +90,7 @@ class AnggotaController extends Controller
             return $e->getMessage();
         }
 
-        // return redirect()->route('users_show', $anggota->id);
-        return redirect()->route('anggota', $anggota->id);
+        return redirect()->route('anggota_show', $anggota->id);
     }
 
     /**
@@ -100,9 +99,19 @@ class AnggotaController extends Controller
      * @param  \App\Models\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function show(Anggota $anggota)
+    public function show($id)
     {
-        //
+        $anggota = Anggota::find($id);
+
+        $pass = [
+            "anggota"=>$anggota,
+        ];
+        
+        if(!$anggota){
+            return view('anggota/detail_404', $pass);
+        }
+
+        return view('anggota/detail', $pass);
     }
 
     /**
