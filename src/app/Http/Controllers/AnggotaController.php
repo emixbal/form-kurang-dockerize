@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,13 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        //
+        $anggota = Anggota::all();
+
+        $pass = [
+            "anggota"=>$anggota,
+        ];
+        
+        return view('anggota/index', $pass);
     }
 
     /**
@@ -24,7 +31,7 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-        //
+        return view('anggota/input');
     }
 
     /**
@@ -35,7 +42,56 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|min:2',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('anggota/new')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $year   = $request->year;
+        $month  = $request->month[0];
+        $day    = $request->day;
+
+        if($year < 1950 || $year > 2050){
+            return redirect('anggota/new')
+            ->withErrors("Invalid tahun lahir")
+            ->withInput();
+        }
+        if($month < 1 || $month > 12){
+            return redirect('anggota/new')
+            ->withErrors("Invalid bulan lahir")
+            ->withInput();
+        }
+        if($day < 1 || $day > 31){
+            return redirect('anggota/new')
+            ->withErrors("Invalid tanggal lahir")
+            ->withInput();
+        }
+
+        $dob = date('Y-m-d H:i:s', mktime(0, 0, 0, $month, $day, $year));
+
+        $anggota = new Anggota;
+
+        $anggota->nama = $request->nama;
+        $anggota->alamat = $request->alamat;
+        $anggota->nomer_anggota = ($request->nip)?$request->nip:NULL;
+        $anggota->pob = $request->pob;
+        $anggota->dob = $dob;
+        $anggota->nik = $request->nik;
+        $anggota->nip = $request->nip;
+
+        try {
+            $anggota->save();
+        } catch (\Throwable $e) {
+            return $e->getMessage();
+        }
+
+        // return redirect()->route('users_show', $anggota->id);
+        return redirect()->route('anggota', $anggota->id);
     }
 
     /**
