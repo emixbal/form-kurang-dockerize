@@ -37,4 +37,8 @@ Route::group(['prefix' => 'anggota', 'middleware' => ['auth']], function(){
 
     Route::get('/new', [App\Http\Controllers\AnggotaController::class, 'create'])->name('anggota_create');
     Route::post('/new', [App\Http\Controllers\AnggotaController::class, 'store'])->name('anggota_store');
+
+    Route::get('/{id}', [App\Http\Controllers\AnggotaController::class, 'show'])->name('anggota_show');
+
+    Route::get('/{id}/edit', [App\Http\Controllers\AnggotaController::class, 'edit'])->name('anggotas_edit');
 });
