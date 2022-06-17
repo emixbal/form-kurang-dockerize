@@ -15,9 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')
-// ->middleware('isSuperadmin')
-;
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('users')->group(function () {
     Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('users')->middleware('isSuperadmin');
@@ -31,4 +30,11 @@ Route::prefix('users')->group(function () {
 
     Route::get('/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users_edit')->middleware('isSuperadmin');
     Route::post('/{id}/update', [App\Http\Controllers\UserController::class, 'update'])->name('users_update')->middleware('isSuperadmin');
+});
+
+Route::group(['prefix' => 'anggota', 'middleware' => ['auth']], function(){
+    Route::get('/', [App\Http\Controllers\AnggotaController::class, 'index'])->name('anggota');
+
+    Route::get('/new', [App\Http\Controllers\AnggotaController::class, 'create'])->name('anggota_create');
+    Route::post('/new', [App\Http\Controllers\AnggotaController::class, 'store'])->name('anggota_store');
 });
