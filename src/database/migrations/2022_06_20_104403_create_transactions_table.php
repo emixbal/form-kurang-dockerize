@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('nominal', $precision = 15, $scale = 2)->default(0);
             $table->bigInteger('transaction_type_id')->unsigned()->nullable();
             $table->foreign('transaction_type_id')->references('id')->on('transaction_types');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
