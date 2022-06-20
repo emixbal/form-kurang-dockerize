@@ -87,7 +87,9 @@ class AnggotaController extends Controller
         try {
             $anggota->save();
         } catch (\Throwable $e) {
-            return $e->getMessage();
+            return redirect('anggota/new')
+            ->withErrors($e->getMessage())
+            ->withInput();
         }
 
         return redirect()->route('anggota_show', $anggota->id);

@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Anggota extends Model
+class Voucher extends Model
 {
     use HasFactory;
-
-    public function voucher()
-    {
-        return $this->hasOne(Voucher::class)->withDefault();
-    }
 }
