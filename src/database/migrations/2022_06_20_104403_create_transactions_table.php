@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->decimal('nominal', $precision = 15, $scale = 2)->default(0);
+            $table->bigInteger('anggota_id')->unsigned()->nullable();
+            $table->foreign('anggota_id')->references('id')->on('anggotas');
             $table->bigInteger('transaction_type_id')->unsigned()->nullable();
             $table->foreign('transaction_type_id')->references('id')->on('transaction_types');
             $table->bigInteger('user_id')->unsigned()->nullable();
