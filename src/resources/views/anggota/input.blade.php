@@ -18,11 +18,11 @@
     </div>
 @endif
 
-<form method="POST" action="/anggota_kekurangan/new" enctype="multipart/form-data">
+<form method="POST" action="/anggota_kekurangan/new" enctype="multipart/form-data" onsubmit="return confirm('Apakah data yang diisikan sudah benar?');">
     @csrf
     <div class="form-group">
         <label for="nama">Nama</label>
-        <input maxlength="100" type="text" class="form-control" id="nama" placeholder="Enter Nama" name="nama" value="{{ old('nama') }}">
+        <input required maxlength="100" type="text" class="form-control" id="nama" placeholder="Enter Nama" name="nama" value="{{ old('nama') }}">
     </div>
 
     <div class="row">
@@ -30,7 +30,7 @@
         
             <div class="form-group">
                 <label for="nama">Tempat Lahir (pob)</label>
-                <input maxlength="100" type="text" class="form-control" id="pob" placeholder="Enter Tempat Lahir" name="pob" value="{{ old('pob') }}">
+                <input required maxlength="100" type="text" class="form-control" id="pob" placeholder="Enter Tempat Lahir" name="pob" value="{{ old('pob') }}">
             </div>
         
         </div>
@@ -39,7 +39,7 @@
                 
                 <div class="form-group col-sm-3">
                     <label for="nama">Tanggal Lahir</label>
-                    <input  min="1" max="31" type="number" class="form-control" id="day" placeholder="Enter Tanggal Lahir" name="day">
+                    <input required  min="1" max="31" type="number" class="form-control" id="day" placeholder="Enter Tanggal Lahir" name="day">
                 </div>
 
                 <div class="form-group col-sm-4">
@@ -62,7 +62,7 @@
 
                 <div class="form-group col-sm-3">
                     <label for="nama">Tahun Lahir</label>
-                    <input min="1950" max="2050" type="number" class="form-control" id="year" placeholder="Enter Tahun Lahir" name="year">
+                    <input required min="1950" max="2050" type="number" class="form-control" id="year" placeholder="Enter Tahun Lahir" name="year">
                 </div>
 
             </div>
@@ -71,22 +71,22 @@
     
     <div class="form-group">
         <label>Alamat</label>
-        <textarea class="form-control" id="alamat" value="{{ old('alamat') }}" placeholder="Enter Alamat" name="alamat"></textarea>
+        <textarea class="form-control" id="alamat" value="{{ old('alamat') }}" placeholder="Enter Alamat" name="alamat" required></textarea>
     </div>
     
     <div class="form-group">
         <label>NIK</label>
-        <input type="text" class="form-control" id="nik" value="{{ old('nik') }}" placeholder="Enter NIK" name="nik">
+        <input type="text" class="form-control" id="nik" value="{{ old('nik') }}" placeholder="Enter NIK" name="nik" required>
     </div>
 
     <div class="form-group">
         <label>NIP</label>
-        <input type="text" class="form-control" id="nip" value="{{ old('nip') }}" placeholder="Enter NIP" name="nip">
+        <input type="text" class="form-control" id="nip" value="{{ old('nip') }}" placeholder="Enter NIP" name="nip" required>
     </div>
 
     <div class="form-group">
         <label for="exampleFormControlFile1">Foto Anggota</label>
-        <input type="file" class="form-control" name="image">
+        <input type="file" class="form-control" name="image" required accept="image/*">
     </div>
     
     <button type="submit" class="btn btn-primary">Submit</button>
