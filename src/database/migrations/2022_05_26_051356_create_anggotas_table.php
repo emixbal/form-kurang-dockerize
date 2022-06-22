@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('dob');
             $table->string('nik');
             $table->string('nip');
+            $table->string('image');
             $table->timestamps();
         });
     }

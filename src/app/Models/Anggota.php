@@ -13,4 +13,9 @@ class Anggota extends Model
     {
         return $this->hasOne(Voucher::class)->withDefault();
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class AnggotaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $anggota = Anggota::all();
@@ -24,30 +19,24 @@ class AnggotaController extends Controller
         return view('anggota/index', $pass);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('anggota/input');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|min:2',
+            // 'alamat' => 'required',
+            // 'nik' => 'required|min:16',
+            // 'nip' => 'required',
+            // 'pob' => 'required',
+            'image' => 'required|image|max:2048',
         ]);
 
         if ($validator->fails()) {
-            return redirect('anggota/new')
+            return redirect('anggota_kekurangan/new')
             ->withErrors($validator)
             ->withInput();
         }
@@ -57,17 +46,17 @@ class AnggotaController extends Controller
         $day    = $request->day;
 
         if($year < 1950 || $year > 2050){
-            return redirect('anggota/new')
+            return redirect('anggota_kekurangan/new')
             ->withErrors("Invalid tahun lahir")
             ->withInput();
         }
         if($month < 1 || $month > 12){
-            return redirect('anggota/new')
+            return redirect('anggota_kekurangan/new')
             ->withErrors("Invalid bulan lahir")
             ->withInput();
         }
         if($day < 1 || $day > 31){
-            return redirect('anggota/new')
+            return redirect('anggota_kekurangan/new')
             ->withErrors("Invalid tanggal lahir")
             ->withInput();
         }
@@ -84,10 +73,22 @@ class AnggotaController extends Controller
         $anggota->nik = $request->nik;
         $anggota->nip = $request->nip;
 
+        $imageName = time().'.'.$request->file('image')->extension();
+
+        try {
+            $request->image->move(public_path('foto_anggota'), $imageName);
+        } catch (\Throwable $e) {
+            return redirect('anggota_kekurangan/new')
+            ->withErrors($e->getMessage())
+            ->withInput();
+        }
+
+        $anggota->image = $imageName;
+        
         try {
             $anggota->save();
         } catch (\Throwable $e) {
-            return redirect('anggota/new')
+            return redirect('anggota_kekurangan/new')
             ->withErrors($e->getMessage())
             ->withInput();
         }
@@ -95,12 +96,6 @@ class AnggotaController extends Controller
         return redirect()->route('anggota_show', $anggota->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $anggota = Anggota::find($id);
@@ -114,39 +109,5 @@ class AnggotaController extends Controller
         }
 
         return view('anggota/detail', $pass);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Anggota $anggota)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Anggota $anggota)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Anggota $anggota)
-    {
-        //
     }
 }

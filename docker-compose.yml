@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: nginx.dockerfile
-    container_name: nginx
+    container_name: form_kurang_nginx
     ports:
       - 80:80 #sesuaikan
     volumes:
@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: php.dockerfile
-    container_name: php
+    container_name: form_kurang_php
     volumes:
       - ./src:/var/www/html:delegated
     user: root
@@ -31,7 +31,7 @@ services:
     build:
       context: .
       dockerfile: composer.dockerfile
-    container_name: composer
+    container_name: form_kurang_composer
     volumes:
       - ./src:/var/www/html
     working_dir: /var/www/html

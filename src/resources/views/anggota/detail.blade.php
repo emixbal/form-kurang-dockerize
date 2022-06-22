@@ -65,6 +65,17 @@
                 {{$anggota->nip}}
             </td>
         </tr>
+
+        <tr>
+            <th>
+                Saldo Voucher
+            </th>
+            <td>
+                <strong>
+                    Rp {{$anggota->voucher->saldo}}
+                </strong>
+            </td>
+        </tr>
         
         </tbody>
         </table>
@@ -76,6 +87,40 @@
         <a class="btn btn-primary" href="{{route('anggotas_edit', $anggota->id)}}">
             Edit
         </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Informasi List Semua Transaksi</div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Nominal (Rp)</th>
+                    <th scope="col">Keterangan</th>
+                    <th scope="col">Petugas</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(count($anggota->transactions)>0)
+                    @foreach($anggota->transactions as $transaction)
+                        <tr>
+                            <td>
+                                {{ \Carbon\Carbon::parse($transaction->created_at)->translatedFormat('d F Y - H:i:s') }}
+                            </td>
+                            <td>{{$transaction->nominal}}</td>
+                            <td>{{$transaction->keterangan}}</td>
+                            <td>{{$transaction->petugas->name}}</td>
+                        </tr>
+                    @endforeach
+                @endif
+                
+            </tbody>
+        </table>
+
+
+
     </div>
 </div>
 
