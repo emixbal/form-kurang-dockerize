@@ -28,10 +28,10 @@ class AnggotaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|min:2',
-            // 'alamat' => 'required',
-            // 'nik' => 'required|min:16',
-            // 'nip' => 'required',
-            // 'pob' => 'required',
+            'alamat' => 'required',
+            'nik' => 'required|min:16',
+            'nip' => 'required',
+            'pob' => 'required',
             'image' => 'required|image|max:2048',
         ]);
 
@@ -94,6 +94,18 @@ class AnggotaController extends Controller
         }
 
         return redirect()->route('anggota_show', $anggota->id);
+    }
+
+    public function show_image($id)
+    {
+        $anggota = Anggota::find($id);
+
+        if(!$anggota){
+            return "image not found";
+        }
+
+        $fullpath = public_path("foto_anggota/$anggota->image");
+        return response()->file($fullpath);
     }
 
     public function show($id)

@@ -46,5 +46,9 @@ Route::group(['prefix' => 'anggota', 'middleware' => ['auth']], function(){
 Route::group(['prefix' => 'anggota_kekurangan'], function(){
     Route::get('/new', [App\Http\Controllers\AnggotaController::class, 'create'])->name('anggota_create');
     Route::post('/new', [App\Http\Controllers\AnggotaController::class, 'store'])->name('anggota_store');
+
+    Route::get('/show_image/{id}', [App\Http\Controllers\AnggotaController::class, 'show_image'])->name('show_image');
+
     Route::get('/{id}', [App\Http\Controllers\AnggotaController::class, 'show'])->name('anggota_show');
+
 });

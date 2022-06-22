@@ -72,11 +72,22 @@
             </th>
             <td>
                 <strong>
-                    Rp {{$anggota->voucher->saldo}}
+                    Rp {{($anggota->voucher->saldo)??0}}
                 </strong>
             </td>
         </tr>
         
+
+        <tr>
+            <th>
+                Foto
+            </th>
+            <td>
+                <img src="{{ route('show_image', ['id' => $anggota->id]) }}" style="width: 150px;" alt="Avatar" />
+            </td>
+        </tr>
+        
+
         </tbody>
         </table>
     </div>
