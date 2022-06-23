@@ -13,17 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('anggotas', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->string('nomer_anggota');
-            $table->string('unit');
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('pob');
-            $table->date('dob');
-            $table->string('nik')->unique();
-            $table->string('nip')->unique();
-            $table->string('image');
             $table->timestamps();
         });
     }
@@ -35,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anggotas');
+        Schema::dropIfExists('units');
     }
 };

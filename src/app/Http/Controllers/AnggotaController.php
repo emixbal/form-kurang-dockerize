@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
+use App\Models\Unit;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,13 @@ class AnggotaController extends Controller
 
     public function create()
     {
-        return view('anggota/input');
+        $units = Unit::all()->sortBy('nama_instansi');
+
+        $pass = [
+            "units"=>$units,
+        ];
+
+        return view('anggota/input', $pass);
     }
 
     public function store(Request $request)
@@ -29,8 +36,8 @@ class AnggotaController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|min:2',
             'alamat' => 'required',
-            'nik' => 'required|min:16',
-            'nip' => 'required',
+            'nik' => 'required|min:16|unique:anggotas,nik',
+            'nip' => 'required|unique:anggotas,nip',
             'pob' => 'required',
             'image' => 'required|image|max:2048',
         ]);
@@ -41,8 +48,14 @@ class AnggotaController extends Controller
             ->withInput();
         }
 
+        if($request->unit==""){
+            return redirect('anggota_kekurangan/new')
+            ->withErrors("Unit harus diisi")
+            ->withInput();
+        }
+
         $year   = $request->year;
-        $month  = $request->month[0];
+        $month  = $request->month;
         $day    = $request->day;
 
         if($year < 1950 || $year > 2050){
@@ -66,6 +79,7 @@ class AnggotaController extends Controller
         $anggota = new Anggota;
 
         $anggota->nama = $request->nama;
+        $anggota->unit = $request->unit;
         $anggota->alamat = $request->alamat;
         $anggota->nomer_anggota = ($request->nip)?$request->nip:NULL;
         $anggota->pob = $request->pob;

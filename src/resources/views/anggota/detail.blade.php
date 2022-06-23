@@ -23,6 +23,14 @@
         </tr>
         <tr>
             <th>
+                Unit
+            </th>
+            <td>
+                {{$anggota->unit}}
+            </td>
+        </tr>
+        <tr>
+            <th>
                 Nomer Anggota
             </th>
             <td>
